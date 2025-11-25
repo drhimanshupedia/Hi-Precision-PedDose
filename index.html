@@ -119,6 +119,12 @@ const drugs = [
     regimens:[ { label:'Emergency dose', dose:0.2, doseUnit:'mg/kg/dose', freq:'SOS' } ],
     conc:{ amount:1, perMl:1 }, note:'1:9 dilution is commonly used', dilutionApply:true },
 
+  {
+  name: 'Inj Diazepam', route: 'Injectable',
+  regimens: [ { label: 'Standard IV dose', dose: 0.3, doseUnit: 'mg/kg/dose', freq: 'SOS' } ],
+  conc: { amount: 5, perMl: 1 },   // 1 ml = 5 mg
+  note: 'Give slowly IV. Use 1:9 dilution.', dilutionApply: true },
+
   { name:'Inj Paracetamol IV', route:'Injectable',
     regimens:[ { label:'Analgesic/antipyretic', dose:5, doseUnit:'mg/kg/dose', freq:'SOS' } ],
     conc:{ amount:150, perMl:1 }, note:'150 mg = 1 ml; 1:9 dilution used for small doses', dilutionApply:true },
@@ -296,9 +302,12 @@ const drugs = [
   { name:'Syp Salbutamol', route:'Oral',
     regimens:[ { dose:0.4, doseUnit:'mg/kg/day', freq:'TDS' } ], conc:{ amount:2, perMl:5 } },
 
-  { name:'Syp Dicyclomine', route:'Oral',
-    regimens:[ { dose:5, doseUnit:'mg/kg/dose', freq:'TDS' } ], conc:{ amount:10, perMl:5 }, note:'Max 20 mg/day' },
-
+  {
+  name: 'Syp Dicyclomine', route: 'Oral', regimens: [ { label: '<10 kg', dose: 5, doseUnit: 'mg', freq: 'OD' },
+    { label: '>10 kg', dose: 10, doseUnit: 'mg', freq: 'OD' } ],
+  conc: { amount: 10, perMl: 5 },   // 5 ml = 10 mg note: 'Weight-based dosing',
+  dilutionApply: false
+},
   { name:'Syp Mefenamic Acid', route:'Oral',
     regimens:[ { dose:5, doseUnit:'mg/kg/dose', freq:'QDS' } ], conc:{ amount:50, perMl:5 }, note:'QDS' }
 ];
@@ -474,4 +483,5 @@ renderList();
         .catch(err => console.log("Service Worker failed:", err));
     });
   }
+
 </script>
