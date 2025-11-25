@@ -302,11 +302,7 @@ const drugs = [
   { name:'Syp Salbutamol', route:'Oral',
     regimens:[ { dose:0.4, doseUnit:'mg/kg/day', freq:'TDS' } ], conc:{ amount:2, perMl:5 } },
 
-  {
-  name: 'Syp Dicyclomine', route: 'Oral', regimens: [ { label: '<10 kg', dose: 5, doseUnit: 'mg', freq: 'OD' },
-    { label: '>10 kg', dose: 10, doseUnit: 'mg', freq: 'OD' } ],
-  conc: { amount: 10, perMl: 5 },   // 5 ml = 10 mg note: 'Weight-based dosing',
-  dilutionApply: false
+  {name: 'Syp Dicyclomine', route: 'Oral', regimens: [ { label: '<10 kg', dose: 5, doseUnit: 'mg', freq: 'OD' }, { label: '>10 kg', dose: 10, doseUnit: 'mg', freq: 'OD' } ], conc: { amount: 10, perMl: 5 } },
 },
   { name:'Syp Mefenamic Acid', route:'Oral',
     regimens:[ { dose:5, doseUnit:'mg/kg/dose', freq:'QDS' } ], conc:{ amount:50, perMl:5 }, note:'QDS' }
