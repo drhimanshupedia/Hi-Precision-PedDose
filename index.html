@@ -1,499 +1,415 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "vjridecgxm");
-</script>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Hi-Precision PedDose</title>
-<style>
-  :root{
-    --bg:#161617;
-    --panel:#212124;
-    --muted:#F2C4CE;
-    --accent:#F58F7C;
-    --card:#232325;
-    --card-2:#18181a;
-    --text:#ffffff;
-  }
-  html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:Montserrat,Segoe UI,Arial,sans-serif}
-  header{width:100%;padding:28px 12px 18px;text-align:center}
-  h1{display:inline-block;background:linear-gradient(90deg,var(--muted),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:28px;margin:0;padding:10px 28px;border-radius:12px;letter-spacing:1px}
-  .byline{margin-top:8px;color:#FAE6EA;opacity:.85;font-size:13px}
-  .app {
-    width:95%;
-    max-width:920px;
-    margin:18px auto 36px;
-    background:var(--panel);
-    border-radius:14px;
-    padding:18px;
-    box-shadow:0 6px 28px rgba(0,0,0,.6);
-  }
-  .controls {display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
-  .left-controls{display:flex;gap:12px;align-items:center}
-  label{font-size:15px}
-  input[type=number]{
-    width:110px;padding:8px;border-radius:8px;border:1px solid var(--muted);background:#161617;color:var(--text);font-size:15px;outline:none;
-  }
-  .route-buttons{display:flex;gap:10px}
-  .route-btn{
-    padding:8px 14px;border-radius:10px;border:none;background:linear-gradient(90deg,var(--muted),var(--accent));color:#161617;font-weight:700;cursor:pointer;
-  }
-  .route-btn.inactive{opacity:.85;background:#2b2b2b;color:var(--text);border:1px solid #2e2e2e}
-  .tips{font-size:12px;color:var(--muted);opacity:.9;margin-top:10px}
-  .drug-list{
-    margin-top:18px;
-    max-height:62vh;
-    overflow:auto;
-    background:var(--card-2);
-    padding:14px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.6)
-  }
-  .drug-row{
-    background:var(--card);
-    padding:12px 14px;border-radius:10px;margin-bottom:10px;box-shadow:0 3px 10px rgba(0,0,0,.45);
-  }
-  .drug-name{color:var(--accent);font-weight:700;font-size:16px;margin-bottom:4px}
-  .drug-rule{color:var(--muted);font-size:13px;margin-bottom:6px}
-  .dose-output{color:#F2C4CE;font-weight:700;font-size:14px}
-  .note{font-size:12px;color:#e8cfd3;margin-top:6px;opacity:.95}
-  footer{margin:18px auto 36px;text-align:center;color:#fff;opacity:.28;font-size:13px}
-  @media (max-width:600px){
-    .left-controls{flex-direction:column;align-items:flex-start;gap:8px}
-    input[type=number]{width:92px}
-    h1{font-size:20px;padding:8px 18px}
-  }
-  <link rel="manifest" href="manifest.json">
-<script>
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker
-        .register("sw.js")
-        .then(reg => console.log("Service Worker registered:", reg))
-        .catch(err => console.log("Service Worker failed:", err));
-    });
-  }
-</script>
-</style>
-</head>
-<body>
-  <header>
-    <h1>Hi-Precision PedDose</h1>
-    <div class="byline">Created by Dr Himanshu Patil</div>
-  </header>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Hi-Precision PedDose</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("sw.js")
+            .then(reg => console.log("SW registered"))
+            .catch(err => console.log("SW failed", err));
+        });
+      }
+    </script>
 
-  <main class="app" role="main">
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "vjridecgxm");
+    </script>
+
+    <style>
+      :root{ 
+        --bg:#161617; 
+        --panel:#212124; 
+        --muted:#F2C4CE; 
+        --accent:#F58F7C; 
+        --card:#232325; 
+        --card-2:#18181a; 
+        --text:#ffffff; 
+        --fluid-bg: #2a2d3e;
+      } 
+      html,body{height:100%;margin:0;background:var(--bg);color:var(--text);font-family:Montserrat,Segoe UI,Arial,sans-serif} 
+      header{width:100%;padding:28px 12px 18px;text-align:center} 
+      h1{display:inline-block;background:linear-gradient(90deg,var(--muted),var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent;font-size:28px;margin:0;padding:10px 28px;border-radius:12px;letter-spacing:1px} 
+      .byline{margin-top:8px;color:#FAE6EA;opacity:.85;font-size:13px} 
+      
+      .app { 
+        width:95%; 
+        max-width:920px; 
+        margin:18px auto 36px; 
+        background:var(--panel); 
+        border-radius:14px; 
+        padding:18px; 
+        box-shadow:0 6px 28px rgba(0,0,0,.6); 
+      } 
+
+      /* Controls & Search */
+      .controls {display:flex;flex-direction:column;gap:15px;margin-bottom:20px;} 
+      .input-row {display:flex; flex-wrap:wrap; gap:12px; align-items:center;}
+      input[type=number], input[type=text]{ 
+        padding:10px; border-radius:8px; border:1px solid var(--muted); background:#161617; color:var(--text); font-size:15px; outline:none; 
+      }
+      input[type=text] { flex-grow: 1; }
+      
+      .route-buttons{display:flex;gap:10px} 
+      .route-btn{ 
+        padding:10px 18px;border-radius:10px;border:none;background:linear-gradient(90deg,var(--muted),var(--accent));color:#161617;font-weight:700;cursor:pointer; 
+      } 
+      .route-btn.inactive{opacity:.85;background:#2b2b2b;color:var(--text);border:1px solid #2e2e2e} 
+
+      /* Fluid Card */
+      .fluid-card {
+        background: var(--fluid-bg);
+        border: 1px border var(--accent);
+        padding: 15px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        border-left: 5px solid var(--accent);
+      }
+      .fluid-title { font-weight: 700; color: var(--accent); margin-bottom: 5px; font-size: 14px; text-transform: uppercase; }
+      .fluid-res { font-size: 16px; font-weight: 600; }
+
+      .drug-list{ 
+        max-height:62vh; 
+        overflow:auto; 
+        background:var(--card-2); 
+        padding:14px;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.6) 
+      } 
+      .drug-row{ 
+        background:var(--card); 
+        padding:12px 14px;border-radius:10px;margin-bottom:10px;box-shadow:0 3px 10px rgba(0,0,0,.45); 
+      } 
+      .drug-name{color:var(--accent);font-weight:700;font-size:16px;margin-bottom:4px} 
+      .drug-rule{color:var(--muted);font-size:13px;margin-bottom:6px} 
+      .dose-output{color:#F2C4CE;font-weight:700;font-size:14px; line-height: 1.4;} 
+      .note{font-size:12px;color:#e8cfd3;margin-top:6px;opacity:.95} 
+      footer{margin:18px auto 36px;text-align:center;color:#fff;opacity:.28;font-size:13px} 
+
+      @media (max-width:600px){ 
+        h1{font-size:20px;padding:8px 18px} 
+        .input-row { flex-direction: column; align-items: stretch; }
+      } 
+    </style>
+</head> 
+<body> 
+
+  <header> 
+    <h1>Hi-Precision PedDose</h1> 
+    <div class="byline">Created by Dr. Himanshu Patil</div> 
+  </header> 
+
+  <main class="app"> 
     <div class="controls">
-      <div class="left-controls">
-        <label for="weight">Weight (kg)</label>
-        <input id="weight" type="number" min="0.1" step="0.1" value="10" aria-label="Weight in kilograms">
-        <div class="route-buttons" style="margin-left:6px">
-          <button id="btnInject" class="route-btn">Injectable</button>
-          <button id="btnOral" class="route-btn inactive">Oral</button>
+      <div class="input-row">
+        <div style="flex:1">
+            <label style="display:block; font-size:12px; margin-bottom:4px">Weight (kg)</label>
+            <input id="weight" type="number" min="0.1" step="0.1" value="10" style="width:100%">
+        </div>
+        <div style="flex:2">
+            <label style="display:block; font-size:12px; margin-bottom:4px">Search Drug Name</label>
+            <input id="search" type="text" placeholder="Search e.g. Paracetamol...">
         </div>
       </div>
-      <div style="text-align:right">
-        <div style="font-size:13px;color:var(--muted)">Quick tip</div>
-        <div style="font-size:12px;color:#e8cfd3;opacity:.9">Injectables: if diluted 1:9 is used show diluted volume when diluted ≤10 ml; otherwise show plain.</div>
-      </div>
+      
+      <div class="route-buttons"> 
+        <button id="btnInject" class="route-btn">Injectable</button> 
+        <button id="btnOral" class="route-btn inactive">Oral</button> 
+      </div> 
     </div>
 
-    <section id="list" class="drug-list" aria-live="polite" aria-label="Drug list">
-      <!-- Cards populated by JS -->
-    </section>
-  </main>
+    <div id="fluidSection" class="fluid-card">
+        <div class="fluid-title">Fluid Maintenance (Holiday-Segar)</div>
+        <div id="fluidResult" class="fluid-res">Calculating...</div>
+    </div>
 
-  <footer>For educational guidance only. Always verify doses with local protocols before administration.</footer>
+    <section id="list" class="drug-list"> 
+      </section> 
+  </main> 
 
-<script>
-/*
- Dataset structure:
-  - name: string
-  - route: 'Injectable'|'Oral'
-  - regimens: array of { label(optional), dose:number (per kg), doseUnit: 'mg/kg/dose'|'mg/kg/day'|'IU/kg/day', freq: 'OD'|'BD'|'TDS'|'QDS'|'HS'|'SOS'|'STAT' etc. }
-  - conc: { amount:number, perMl:number }  -> e.g., 150 mg per 1 ml => {amount:150, perMl:1}
-  - note: optional note text
-  - dilutionApply: boolean (For injectables we apply universal dilution rule)
-*/
+  <footer>For educational guidance only. Always verify doses clinically.</footer> 
 
-const drugs = [
-  // --- INJECTABLES ---
-  { name:'Inj Adrenaline', route:'Injectable',
-    regimens:[ { label:'Emergency dose', dose:0.2, doseUnit:'mg/kg/dose', freq:'SOS' } ],
-    conc:{ amount:1, perMl:1 }, note:'1:9 dilution is commonly used', dilutionApply:true },
+<script> 
+const drugs = [ 
+  // --- INJECTABLES --- 
+  { name:'Inj Adrenaline', route:'Injectable', 
+    regimens:[ { label:'Emergency dose', dose:0.2, doseUnit:'mg/kg/dose', freq:'SOS' } ], 
+    conc:{ amount:1, perMl:1 }, note:'1:9 dilution is commonly used', dilutionApply:true }, 
 
-  {
-  name: 'Inj Diazepam', route: 'Injectable',
-  regimens: [ { label: 'Standard IV dose', dose: 0.3, doseUnit: 'mg/kg/dose', freq: 'SOS' } ],
-  conc: { amount: 5, perMl: 1 },   // 1 ml = 5 mg
-  note: 'Give slowly IV. Use 1:9 dilution.', dilutionApply: true },
+  { name: 'Inj Diazepam', route: 'Injectable', 
+    regimens: [ { label: 'Standard IV dose', dose: 0.3, doseUnit: 'mg/kg/dose', freq: 'SOS' } ], 
+    conc: { amount: 5, perMl: 1 }, 
+    note: 'Give slowly IV. Use 1:9 dilution.', dilutionApply: true }, 
 
-  { name:'Inj Paracetamol IV', route:'Injectable',
-    regimens:[ { label:'Analgesic/antipyretic', dose:5, doseUnit:'mg/kg/dose', freq:'SOS' } ],
-    conc:{ amount:150, perMl:1 }, note:'150 mg = 1 ml; 1:9 dilution used for small doses', dilutionApply:true },
+  { name:'Inj Paracetamol IV', route:'Injectable', 
+    regimens:[ { label:'Analgesic/antipyretic', dose:5, doseUnit:'mg/kg/dose', freq:'SOS' } ], 
+    conc:{ amount:150, perMl:1 }, note:'150 mg = 1 ml; 1:9 dilution used for small doses', dilutionApply:true }, 
 
-  { name:'Inj Ondansetron', route:'Injectable',
-    regimens:[ { dose:0.2, doseUnit:'mg/kg/dose', freq:'OD' } ],
-    conc:{ amount:2, perMl:1 }, note:'2 mg/ml', dilutionApply:true },
+  { name:'Inj Ondansetron', route:'Injectable', 
+    regimens:[ { dose:0.2, doseUnit:'mg/kg/dose', freq:'OD' } ], 
+    conc:{ amount:2, perMl:1 }, note:'2 mg/ml', dilutionApply:true }, 
 
-  { name:'Inj Pantoprazole', route:'Injectable',
-    regimens:[ { dose:1, doseUnit:'mg/kg/dose', freq:'OD' } ],
-    conc:{ amount:40, perMl:10 }, note:'40 mg / 10 ml', dilutionApply:true },
+  { name:'Inj Pantoprazole', route:'Injectable', 
+    regimens:[ { dose:1, doseUnit:'mg/kg/dose', freq:'OD' } ], 
+    conc:{ amount:40, perMl:10 }, note:'40 mg / 10 ml', dilutionApply:true }, 
 
-  { name:'Inj Ranitidine', route:'Injectable',
-    regimens:[ { dose:2, doseUnit:'mg/kg/dose', freq:'BD' } ],
-    conc:{ amount:25, perMl:1 }, note:'IV BD', dilutionApply:true },
+  { name:'Inj Ranitidine', route:'Injectable', 
+    regimens:[ { dose:2, doseUnit:'mg/kg/dose', freq:'BD' } ], 
+    conc:{ amount:25, perMl:1 }, note:'IV BD', dilutionApply:true }, 
 
-  { name:'Inj Amoxclav', route:'Injectable',
-    regimens:[ { dose:30, doseUnit:'mg/kg/dose', freq:'TDS' } ],
-    note:'IV TDS', dilutionApply:true },
+  { name:'Inj Amoxclav', route:'Injectable', regimens:[ { dose:30, doseUnit:'mg/kg/dose', freq:'TDS' } ], note:'IV TDS', dilutionApply:true }, 
+  { name:'Inj Amikacin', route:'Injectable', regimens:[ { dose:15, doseUnit:'mg/kg/day', freq:'BD' } ], note:'IV BD', dilutionApply:true }, 
+  { name:'Inj Piptaz', route:'Injectable', regimens:[ { dose:75, doseUnit:'mg/kg/dose', freq:'TDS' } ], note:'IV TDS', dilutionApply:true }, 
+  { name:'Inj Clindamycine', route:'Injectable', regimens:[ { dose:20, doseUnit:'mg/kg/day', freq:'QDS' } ], note:'QDS', dilutionApply:true }, 
 
-  { name:'Inj Amikacin', route:'Injectable',
-    regimens:[ { dose:15, doseUnit:'mg/kg/day', freq:'BD' } ],
-    note:'IV BD', dilutionApply:true },
+  { name:'Inj Metronidazole', route:'Injectable', 
+    regimens:[ 
+      { label:'Loading', dose:15, doseUnit:'mg/kg/dose', freq:'STAT' }, 
+      { label:'Maintenance', dose:7.5, doseUnit:'mg/kg/dose', freq:'TDS' } 
+    ], 
+    conc:{ amount:5, perMl:1 }, note:'5 mg/ml; loading then maintenance', dilutionApply:true }, 
 
-  { name:'Inj Piptaz', route:'Injectable',
-    regimens:[ { dose:75, doseUnit:'mg/kg/dose', freq:'TDS' } ],
-    note:'IV TDS', dilutionApply:true },
+  { name:'Inj Linezolid', route:'Injectable', 
+    regimens:[ { dose:20, doseUnit:'mg/kg/day', freq:'BD' } ], 
+    conc:{ amount:2, perMl:1 }, note:'IV BD', dilutionApply:true }, 
 
-  { name:'Inj Clindamycine', route:'Injectable',
-    regimens:[ { dose:20, doseUnit:'mg/kg/day', freq:'QDS' } ],
-    note:'QDS', dilutionApply:true },
+  { name:'Inj Ceftriaxone', route:'Injectable', regimens:[ { dose:50, doseUnit:'mg/kg/dose', freq:'BD' } ], note:'IV BD', dilutionApply:true }, 
+  { name:'Inj Cefotaxime', route:'Injectable', regimens:[ { dose:50, doseUnit:'mg/kg/dose', freq:'BD' } ], note:'IV BD/TDS', dilutionApply:true }, 
+  { name:'Inj Artesunate', route:'Injectable', regimens:[ { dose:2.5, doseUnit:'mg/kg/day', freq:'OD' } ], note:'IV OD', dilutionApply:true }, 
+  { name:'Inj Meropenem', route:'Injectable', regimens:[ { dose:20, doseUnit:'mg/kg/dose', freq:'BD' } ], note:'IV BD', dilutionApply:true }, 
+  { name:'Inj Vancomycin', route:'Injectable', regimens:[ { dose:15, doseUnit:'mg/kg/dose', freq:'TDS' } ], note:'IV TDS', dilutionApply:true }, 
 
-  { name:'Inj Metronidazole', route:'Injectable',
-    regimens:[
-      { label:'Loading', dose:15, doseUnit:'mg/kg/dose', freq:'STAT' },
-      { label:'Maintenance', dose:7.5, doseUnit:'mg/kg/dose', freq:'TDS' }
+  { name:'Inj Ofloxacin', route:'Injectable', 
+    regimens:[ { dose:10, doseUnit:'mg/kg/dose', freq:'BD' } ], 
+    conc:{ amount:2, perMl:1 }, note:'2 mg/ml', dilutionApply:true }, 
+
+  { name:'Inj Levofloxacin', route:'Injectable', 
+    regimens:[ { dose:10, doseUnit:'mg/kg/day', freq:'BD' } ], 
+    conc:{ amount:2, perMl:1 }, note:'IV BD', dilutionApply:true }, 
+
+  { name:'Inj Cefosalbactam', route:'Injectable', regimens:[ { dose:40, doseUnit:'mg/kg/day', freq:'BD' } ], note:'IV BD', dilutionApply:true }, 
+
+  { name:'Inj Fluconazole', route:'Injectable', 
+    regimens:[ 
+      { label:'Loading', dose:12, doseUnit:'mg/kg/dose', freq:'STAT' }, 
+      { label:'Maintenance', dose:6, doseUnit:'mg/kg/day', freq:'OD' } 
+    ], 
+    conc:{ amount:200, perMl:100 }, note:'200 mg / 100 ml (2 mg/ml)', dilutionApply:true }, 
+
+  { name:'Inj Co-trimoxazole', route:'Injectable', regimens:[ { dose:10, doseUnit:'mg/kg/dose', freq:'BD' } ], note:'IV BD', dilutionApply:true }, 
+
+  { name:'Inj Colistine', route:'Injectable', 
+    regimens:[ { dose:75000, doseUnit:'IU/kg/day', freq:'TDS' } ], 
+    conc:{ amount:100000, perMl:1 }, note:'IU units; IV TDS', dilutionApply:true }, 
+
+  { name:'Inj Hydrocortisone', route:'Injectable', regimens:[ { dose:5, doseUnit:'mg/kg/dose', freq:'QDS' } ], note:'IV QDS', dilutionApply:true }, 
+
+  { name:'Inj Dexamethasone', route:'Injectable', 
+    regimens:[ { dose:0.3, doseUnit:'mg/kg/dose', freq:'BD' } ], 
+    conc:{ amount:4, perMl:1 }, note:'4 mg/ml', dilutionApply:true }, 
+
+  { name:'Inj Phenobarbitone', route:'Injectable', 
+    regimens:[ 
+      { label:'1st loading', dose:20, doseUnit:'mg/kg/dose', freq:'STAT' }, 
+      { label:'Maintenance', dose:5, doseUnit:'mg/kg/day', freq:'BD' } 
+    ], 
+    conc:{ amount:200, perMl:1 }, dilutionApply:true }, 
+
+  { name:'Inj Phenytoin', route:'Injectable', 
+    regimens:[ 
+      { label:'1st loading', dose:20, doseUnit:'mg/kg/dose', freq:'STAT' }, 
+      { label:'Maintenance', dose:5, doseUnit:'mg/kg/day', freq:'BD' } 
+    ], 
+    conc:{ amount:50, perMl:1 }, dilutionApply:true }, 
+
+  { name:'Inj Avil', route:'Injectable', 
+    regimens:[ { dose:0.5, doseUnit:'mg/kg/day', freq:'BD' } ], 
+    conc:{ amount:22.7, perMl:1 }, dilutionApply:true }, 
+
+  { name:'Inj Tranexamic Acid', route:'Injectable', 
+    regimens:[ { dose:25, doseUnit:'mg/kg/dose', freq:'TDS' } ], 
+    conc:{ amount:100, perMl:1 }, dilutionApply:true }, 
+
+  // --- ORAL --- 
+  { name:'Syp Paracetamol', route:'Oral', 
+    regimens:[ { dose:15, doseUnit:'mg/kg/dose', freq:'TDS' } ], conc:{ amount:125, perMl:5 }, note:'125 mg / 5 ml' }, 
+
+  { name:'Syp Ibuprofen', route:'Oral', 
+    regimens:[ { dose:10, doseUnit:'mg/kg/dose', freq:'TDS' } ], conc:{ amount:100, perMl:5 } }, 
+
+  { name:'Syp Cefixime', route:'Oral', 
+    regimens:[ { dose:10, doseUnit:'mg/kg/day', freq:'BD' } ], conc:{ amount:100, perMl:5 } }, 
+
+  { name:'Syp Azithromycin', route:'Oral', 
+    regimens:[ { dose:10, doseUnit:'mg/kg/dose', freq:'OD' } ], conc:{ amount:200, perMl:5 } }, 
+
+  { name:'Syp Amoxclav', route:'Oral', 
+    regimens:[ { dose:45, doseUnit:'mg/kg/day', freq:'BD' } ], conc:{ amount:228.5, perMl:5 } }, 
+
+  { name:'Syp Terbutaline Drops', route:'Oral', 
+    regimens:[ { dose:0.25, doseUnit:'mg/kg/day', freq:'BD' } ], conc:{ amount:0.25, perMl:1 } }, 
+
+  { name:'Syp Levocetirizine', route:'Oral', 
+    regimens:[ { dose:0.125, doseUnit:'mg/kg/dose', freq:'BD' } ], conc:{ amount:2.5, perMl:5 } }, 
+
+  { name: 'Syp Dicyclomine', route: 'Oral',
+    regimens: [
+        { label: '<10 kg', dose: 5, doseUnit: 'mg', freq: 'OD' },
+        { label: '>10 kg', dose: 10, doseUnit: 'mg', freq: 'OD' }
     ],
-    conc:{ amount:5, perMl:1 }, note:'5 mg/ml; loading then maintenance', dilutionApply:true },
-
-  { name:'Inj Linezolid', route:'Injectable',
-    regimens:[ { dose:20, doseUnit:'mg/kg/day', freq:'BD' } ],
-    conc:{ amount:2, perMl:1 }, note:'IV BD', dilutionApply:true },
-
-  { name:'Inj Ceftriaxone', route:'Injectable',
-    regimens:[ { dose:50, doseUnit:'mg/kg/dose', freq:'BD' } ],
-    note:'IV BD (reconstitute as per vial)', dilutionApply:true },
-
-  { name:'Inj Cefotaxime', route:'Injectable',
-    regimens:[ { dose:50, doseUnit:'mg/kg/dose', freq:'BD' } ],
-    note:'IV BD/TDS', dilutionApply:true },
-
-  { name:'Inj Artesunate', route:'Injectable',
-    regimens:[ { dose:2.5, doseUnit:'mg/kg/day', freq:'OD' } ],
-    note:'IV OD', dilutionApply:true },
-
-  { name:'Inj Meropenem', route:'Injectable',
-    regimens:[ { dose:20, doseUnit:'mg/kg/dose', freq:'BD' } ],
-    note:'IV BD', dilutionApply:true },
-
-  { name:'Inj Vancomycin', route:'Injectable',
-    regimens:[ { dose:15, doseUnit:'mg/kg/dose', freq:'TDS' } ],
-    note:'IV TDS', dilutionApply:true },
-
-  { name:'Inj Ofloxacin', route:'Injectable',
-    regimens:[ { dose:10, doseUnit:'mg/kg/dose', freq:'BD' } ],
-    conc:{ amount:2, perMl:1 }, note:'2 mg/ml', dilutionApply:true },
-
-  { name:'Inj Levofloxacin', route:'Injectable',
-    regimens:[ { dose:10, doseUnit:'mg/kg/day', freq:'BD' } ],
-    conc:{ amount:2, perMl:1 }, note:'IV BD', dilutionApply:true },
-
-  { name:'Inj Cefosalbactam', route:'Injectable',
-    regimens:[ { dose:40, doseUnit:'mg/kg/day', freq:'BD' } ],
-    note:'IV BD', dilutionApply:true },
-
-  { name:'Inj Fluconazole', route:'Injectable',
-    regimens:[
-      { label:'Loading', dose:12, doseUnit:'mg/kg/dose', freq:'STAT' },
-      { label:'Maintenance', dose:6, doseUnit:'mg/kg/day', freq:'OD' }
-    ],
-    conc:{ amount:200, perMl:100 }, note:'200 mg / 100 ml (2 mg/ml)', dilutionApply:true },
-
-  { name:'Inj Co-trimoxazole', route:'Injectable',
-    regimens:[ { dose:10, doseUnit:'mg/kg/dose', freq:'BD' } ],
-    note:'IV BD', dilutionApply:true },
-
-  { name:'Inj Colistine', route:'Injectable',
-    regimens:[ { dose:75000, doseUnit:'IU/kg/day', freq:'TDS' } ],
-    conc:{ amount:100000, perMl:1 }, note:'IU units; IV TDS', dilutionApply:true },
-
-  { name:'Inj Hydrocortisone', route:'Injectable',
-    regimens:[ { dose:5, doseUnit:'mg/kg/dose', freq:'QDS' } ],
-    note:'IV QDS', dilutionApply:true },
-
-  { name:'Inj Dexamethasone', route:'Injectable',
-    regimens:[ { dose:0.3, doseUnit:'mg/kg/dose', freq:'BD' } ],
-    conc:{ amount:4, perMl:1 }, note:'4 mg/ml (1:9 dilution used for small doses)', dilutionApply:true },
-
-  { name:'Inj Phenobarbitone', route:'Injectable',
-    regimens:[
-      { label:'1st loading', dose:20, doseUnit:'mg/kg/dose', freq:'STAT' },
-      { label:'2nd/3rd loading', dose:10, doseUnit:'mg/kg/dose', freq:'STAT' },
-      { label:'Maintenance', dose:5, doseUnit:'mg/kg/day', freq:'BD' }
-    ],
-    conc:{ amount:200, perMl:1 }, note:'1 ml = 200 mg; loading patterns described', dilutionApply:true },
-
-  { name:'Inj Phenytoin', route:'Injectable',
-    regimens:[
-      { label:'1st loading', dose:20, doseUnit:'mg/kg/dose', freq:'STAT' },
-      { label:'2nd/3rd loading', dose:10, doseUnit:'mg/kg/dose', freq:'STAT' },
-      { label:'Maintenance', dose:5, doseUnit:'mg/kg/day', freq:'BD' }
-    ],
-    conc:{ amount:50, perMl:1 }, note:'1 ml = 50 mg', dilutionApply:true },
-
-  { name:'Inj Levetiracetam', route:'Injectable',
-    regimens:[ { label:'Loading', dose:20, doseUnit:'mg/kg/dose', freq:'STAT' }, { label:'Maintenance', dose:10, doseUnit:'mg/kg/dose', freq:'BD' } ],
-    note:'Loading then maintenance', dilutionApply:true },
-
-  { name:'Inj Avil (Pheniramine)', route:'Injectable',
-    regimens:[ { dose:0.5, doseUnit:'mg/kg/day', freq:'BD' } ],
-    conc:{ amount:22.7, perMl:1 }, note:'1 ml = 22.7 mg', dilutionApply:true },
-
-  { name:'Inj Diclofenac', route:'Injectable',
-    regimens:[ { dose:3, doseUnit:'mg/kg/dose', freq:'TDS' } ],
-    conc:{ amount:25, perMl:1 }, dilutionApply:true },
-
-  { name:'Inj Tranexamic Acid', route:'Injectable',
-    regimens:[ { dose:25, doseUnit:'mg/kg/dose', freq:'TDS' } ],
-    conc:{ amount:100, perMl:1 }, dilutionApply:true },
-
-  // --- ORAL ---
-  { name:'Syp Paracetamol', route:'Oral',
-    regimens:[ { dose:15, doseUnit:'mg/kg/dose', freq:'TDS' } ], conc:{ amount:125, perMl:5 },
-    note:'125 mg / 5 ml' },
-
-  { name:'Syp Ibuprofen', route:'Oral',
-    regimens:[ { dose:10, doseUnit:'mg/kg/dose', freq:'TDS' } ], conc:{ amount:100, perMl:5 },
-    note:'100 mg / 5 ml' },
-
-  { name:'Syp Cefixime', route:'Oral',
-    regimens:[ { dose:10, doseUnit:'mg/kg/day', freq:'BD' } ], conc:{ amount:100, perMl:5 },
-    note:'Enteric fever: 20 mg/kg/day PO BD' },
-
-  { name:'Syp Azithromycin', route:'Oral',
-    regimens:[ { dose:10, doseUnit:'mg/kg/dose', freq:'OD' } ], conc:{ amount:200, perMl:5 },
-    note:'PO OD' },
-
-  { name:'Syp Amoxclav', route:'Oral',
-    regimens:[ { dose:45, doseUnit:'mg/kg/day', freq:'BD' } ], conc:{ amount:228.5, perMl:5 },
-    note:'PO BD' },
-
-  { name:'Syp Amoxycillin', route:'Oral',
-    regimens:[ { dose:15, doseUnit:'mg/kg/dose', freq:'TDS' } ], conc:{ amount:125, perMl:5 },
-    note:'TDS' },
-
-  { name:'Syp Terbutaline Drops', route:'Oral',
-    regimens:[ { dose:0.25, doseUnit:'mg/kg/day', freq:'BD' } ], conc:{ amount:0.25, perMl:1 },
-    note:'1 ml = 20 drops' },
-
-  { name:'Syp Chlorpheniramine Malate', route:'Oral',
-    regimens:[ { dose:0.35, doseUnit:'mg/kg/day', freq:'TDS' } ], conc:{ amount:15, perMl:5 },
-    note:'PO TDS; 1 ml = 20 drops' },
-
-  { name:'Syp Levocetirizine', route:'Oral',
-    regimens:[ { dose:0.125, doseUnit:'mg/kg/dose', freq:'BD' } ], conc:{ amount:2.5, perMl:5 },
-    note:'BD' },
-
-  { name:'Syp Domperidone', route:'Oral',
-    regimens:[ { dose:0.5, doseUnit:'mg/kg/dose', freq:'TDS' } ], conc:{ amount:1, perMl:5 } },
-
-  { name:'Syp Dextromethorphan', route:'Oral',
-    regimens:[ { dose:8.75, doseUnit:'mg/kg/dose approx', freq:'TDS' } ], conc:{ amount:13.5, perMl:5 },
-    note:'7.5–10 mg TDS; max 60 mg/day' },
-
-  { name:'Syp Salbutamol', route:'Oral',
-    regimens:[ { dose:0.4, doseUnit:'mg/kg/day', freq:'TDS' } ], conc:{ amount:2, perMl:5 } },
-
-  {
-  name: 'Syp Dicyclomine',
-  route: 'Oral',
-  regimens: [
-    { label: '<10 kg', dose: 5, doseUnit: 'mg', freq: 'OD' },
-    { label: '>10 kg', dose: 10, doseUnit: 'mg', freq: 'OD' }
-  ],
-  conc: { amount: 2, perMl: 1 },   // 2 mg per 1 mL  (correct representation)
-  note: 'Weight-based dosing',
-  dilutionApply: false
-},
-  { name:'Syp Mefenamic Acid', route:'Oral',
-    regimens:[ { dose:5, doseUnit:'mg/kg/dose', freq:'QDS' } ], conc:{ amount:50, perMl:5 }, note:'QDS' }
-];
-
-/* Helper functions */
-
-function freqDivisor(freq){
-  if(!freq) return 1;
-  const f = freq.toUpperCase();
-  if(f==='BD') return 2;
-  if(f==='TDS') return 3;
-  if(f==='QDS') return 4;
-  if(f==='OD' || f==='HS' || f==='STAT' || f==='SOS') return 1;
-  return 1;
-}
-
-function freqLabel(freq){
-  if(!freq) return '';
-  if(freq.toUpperCase()==='HS') return 'HS (bedtime)';
-  return freq.toUpperCase();
-}
-
-function concPerMl(conc){
-  if(!conc) return null;
-  // conc: {amount, perMl} => amount mg per perMl ml
-  return conc.amount / conc.perMl;
-}
-
-function formatNumber(n, decimals=2){
-  if(isNaN(n) || n===null) return 'N/A';
-  // drop trailing zeros sensibly
-  return Number.parseFloat(n.toFixed(decimals)).toString();
-}
-
-/* Core dose calc:
-   - If doseUnit contains '/day' -> totalDailyMg = dose*weight -> perDoseMg = totalDailyMg / divisor
-   - If doseUnit contains '/dose' -> perDoseMg = dose * weight (do NOT divide)
-   - If doseUnit contains 'approx' treat like per-dose
-   - IU units handled similarly but labeled IU
-*/
-
-function calcPerDoseMg(regimen, weight){
-  const unit = (regimen.doseUnit||'').toLowerCase();
-  const d = parseFloat(regimen.dose);
-  if(unit.includes('/day')){
-    const totalDaily = d * weight;
-    const div = freqDivisor(regimen.freq);
-    const perDose = totalDaily / div;
-    return { perDoseMg: perDose, totalDailyMg: totalDaily, divided:true };
-  } else { // treat as per-dose (mg/kg/dose, mg/kg/dose approx, IU/kg/dose)
-    const perDose = d * weight;
-    return { perDoseMg: perDose, totalDailyMg: null, divided:false };
+    conc: { amount: 2, perMl: 1 }, 
+    note: 'Fixed dose based on weight threshold'
   }
+]; 
+
+/* Logics */
+
+function calculateFluid(weight) {
+    let total = 0;
+    if (weight <= 10) {
+        total = weight * 100;
+    } else if (weight <= 20) {
+        total = 1000 + (weight - 10) * 50;
+    } else {
+        total = 1500 + (weight - 20) * 20;
+    }
+    const hourly = total / 24;
+    return `Daily: ${total.toFixed(0)} mL | Hourly: ${hourly.toFixed(1)} mL/hr`;
 }
 
-function computeMlFromMg(perDoseMg, concObj){
-  const ppm = concPerMl(concObj);
-  if(!ppm || ppm===0) return null;
-  return perDoseMg / ppm;
-}
+function freqDivisor(freq){ 
+  const f = (freq||'').toUpperCase(); 
+  if(f==='BD') return 2; 
+  if(f==='TDS') return 3; 
+  if(f==='QDS') return 4; 
+  return 1; 
+} 
 
-/* Render functions */
-
-const listEl = document.getElementById('list');
-const btnInject = document.getElementById('btnInject');
-const btnOral = document.getElementById('btnOral');
-const weightEl = document.getElementById('weight');
-
-let currentRoute = 'Injectable';
-btnInject.addEventListener('click', ()=>{ currentRoute='Injectable'; btnInject.classList.remove('inactive'); btnOral.classList.add('inactive'); renderList(); });
-btnOral.addEventListener('click', ()=>{ currentRoute='Oral'; btnOral.classList.remove('inactive'); btnInject.classList.add('inactive'); renderList(); });
-weightEl.addEventListener('input', renderList);
-
-function renderList(){
-  const weight = parseFloat(weightEl.value);
-  listEl.innerHTML = '';
-  if(isNaN(weight) || weight <= 0){
-    listEl.innerHTML = '<div style="color:var(--accent);padding:12px;font-weight:700">Enter valid weight (kg) above to view calculations</div>';
-    return;
+function calcPerDoseMg(regimen, weight){ 
+  const unit = (regimen.doseUnit||'').toLowerCase(); 
+  const d = parseFloat(regimen.dose); 
+  
+  // 1. Fix for Fixed Doses (e.g. Dicyclomine mg)
+  if (unit === 'mg' || unit === 'iu') {
+    return { perDoseMg: d, totalDailyMg: null, divided: false };
   }
 
-  // Filter by route and keep original order (priority not separately pinned here since dataset already ordered)
-  const filtered = drugs.filter(d => d.route === currentRoute);
+  // 2. Weight-based Daily
+  if(unit.includes('/day')){ 
+    const totalDaily = d * weight; 
+    const div = freqDivisor(regimen.freq); 
+    return { perDoseMg: totalDaily / div, totalDailyMg: totalDaily, divided:true }; 
+  } 
+  
+  // 3. Weight-based Per Dose
+  return { perDoseMg: d * weight, totalDailyMg: null, divided:false }; 
+} 
 
-  filtered.forEach(drug => {
-    const card = document.createElement('div');
-    card.className = 'drug-row';
-    const name = document.createElement('div'); name.className='drug-name'; name.textContent = drug.name;
-    card.appendChild(name);
+function formatNumber(n, decimals=2){ 
+  if(isNaN(n) || n===null) return 'N/A'; 
+  return Number.parseFloat(n.toFixed(decimals)).toString(); 
+} 
 
-    // rule line: list regimen summaries
-    const ruleEl = document.createElement('div'); ruleEl.className='drug-rule';
-    const regimenSummaries = drug.regimens.map(r => {
-      return (r.label? (r.label + ': ') : '') + `${r.dose}${r.doseUnit ? ' ' + r.doseUnit : ''} ${r.freq ? '(' + r.freq + ')' : ''}`;
-    }).join(' · ');
-    ruleEl.innerHTML = regimenSummaries;
-    card.appendChild(ruleEl);
+/* UI Render */ 
 
-    // For each regimen, calculate per-dose and show
-    drug.regimens.forEach(regimen => {
-      const calc = calcPerDoseMg(regimen, weight);
-      const perDoseMg = calc.perDoseMg;
-      const totalDaily = calc.totalDailyMg;
-      const divided = calc.divided;
+const listEl = document.getElementById('list'); 
+const btnInject = document.getElementById('btnInject'); 
+const btnOral = document.getElementById('btnOral'); 
+const weightEl = document.getElementById('weight'); 
+const searchEl = document.getElementById('search');
+const fluidResultEl = document.getElementById('fluidResult');
 
-      const out = document.createElement('div');
-      out.className = 'dose-output';
+let currentRoute = 'Injectable'; 
 
-      // handle IU units separately
-      const isIU = (regimen.doseUnit || '').toLowerCase().includes('iu');
+function renderList(){ 
+  const weight = parseFloat(weightEl.value); 
+  const searchTerm = searchEl.value.toLowerCase();
+  
+  listEl.innerHTML = ''; 
+  
+  if(isNaN(weight) || weight <= 0){ 
+    listEl.innerHTML = '<div style="color:var(--accent);padding:12px;">Enter valid weight</div>'; 
+    fluidResultEl.textContent = "Enter weight...";
+    return; 
+  } 
 
-      // compute ml if conc exists
-      let ml = null;
-      if(drug.conc) {
-        const concVal = concPerMl(drug.conc); // mg per ml or IU per ml
-        if(concVal && concVal>0){
-          ml = perDoseMg / concVal;
-        }
-      }
+  // Update Fluid Maintenance
+  fluidResultEl.textContent = calculateFluid(weight);
 
-      const freqText = freqLabel(regimen.freq);
-      // build display text:
+  const filtered = drugs.filter(d => 
+    d.route === currentRoute && 
+    d.name.toLowerCase().includes(searchTerm)
+  ); 
+
+  filtered.forEach(drug => { 
+    const card = document.createElement('div'); 
+    card.className = 'drug-row'; 
+    
+    const name = document.createElement('div'); 
+    name.className='drug-name'; 
+    name.textContent = drug.name; 
+    card.appendChild(name); 
+
+    // Handle regimen filtering (for threshold meds like Dicyclomine)
+    const validRegimens = drug.regimens.filter(r => {
+        if (r.label === '<10 kg') return weight < 10;
+        if (r.label === '>10 kg') return weight >= 10;
+        return true;
+    });
+
+    validRegimens.forEach(regimen => { 
+      const calc = calcPerDoseMg(regimen, weight); 
+      const isIU = (regimen.doseUnit || '').toLowerCase().includes('iu'); 
+      const out = document.createElement('div'); 
+      out.className = 'dose-output'; 
+
       let displayLines = [];
+      const labelPrefix = regimen.label ? `[${regimen.label}] ` : '';
 
-      if(totalDaily !== null){
-        displayLines.push(`Total daily dose: ${formatNumber(totalDaily,1)} ${isIU? 'IU' :'mg'}`);
-        displayLines.push(`Divided ${freqText}: per dose → ${formatNumber(perDoseMg,1)} ${isIU? 'IU':'mg'}`);
-      } else {
-        displayLines.push(`Per dose: ${formatNumber(perDoseMg,1)} ${isIU? 'IU':'mg'}${ (regimen.freq && regimen.freq.toUpperCase()!=='SOS') ? '  ('+freqText+')' : '' }`);
-      }
+      if(calc.totalDailyMg !== null){ 
+        displayLines.push(`${labelPrefix}Total daily: ${formatNumber(calc.totalDailyMg,1)} ${isIU?'IU':'mg'}`); 
+        displayLines.push(`Per dose (${regimen.freq}): ${formatNumber(calc.perDoseMg,1)} ${isIU?'IU':'mg'}`); 
+      } else { 
+        displayLines.push(`${labelPrefix}Per dose: ${formatNumber(calc.perDoseMg,1)} ${isIU?'IU':'mg'} (${regimen.freq||'STAT'})`); 
+      } 
 
-      // ml conversion & dilution (only for injectables and when conc present)
-      if(ml !== null){
-        const plainMl = ml; // plain
-        const dilutedMl = plainMl * 10; // 1:9 total volume
-        if(currentRoute === 'Injectable' && drug.dilutionApply){
-          // Apply universal dilution rule: if diluted volume <= 10 ml => show diluted; else show plain
-          if(dilutedMl <= 10){
-            displayLines.push(`Volume: ${formatNumber(dilutedMl,2)} ml (give as 1:9 dilution)`);
-          } else {
-            displayLines.push(`Volume: ${formatNumber(plainMl,2)} ml (plain; do not dilute -- diluted > 10 ml)`);
-          }
-        } else {
-          // Oral or no dilution
-          displayLines.push(`Volume: ${formatNumber(plainMl,2)} ml per dose`);
-        }
-      } else {
-        displayLines.push(`Volume: N/A (concentration not specified)`);
-      }
+      // Concentration conversion
+      if(drug.conc) { 
+        const ppm = drug.conc.amount / drug.conc.perMl; 
+        const plainMl = calc.perDoseMg / ppm; 
+        
+        if(currentRoute === 'Injectable' && drug.dilutionApply){ 
+          const dilutedMl = plainMl * 10; 
+          if(dilutedMl <= 10) displayLines.push(`Volume: ${formatNumber(dilutedMl,2)} ml (1:9 Dilution)`); 
+          else displayLines.push(`Volume: ${formatNumber(plainMl,2)} ml (Plain)`); 
+        } else { 
+          displayLines.push(`Volume: ${formatNumber(plainMl,2)} ml`); 
+        } 
+      } 
 
-      // if there is a note on the drug, append small
-      if(drug.note) displayLines.push(`Note: ${drug.note}`);
+      if(drug.note) displayLines.push(`<span class="note">Note: ${drug.note}</span>`); 
 
-      out.innerHTML = displayLines.map(l => `<div>${l}</div>`).join('');
-      card.appendChild(out);
-    });
+      out.innerHTML = displayLines.map(l => `<div>${l}</div>`).join(''); 
+      card.appendChild(out); 
+    }); 
+    listEl.appendChild(card); 
+  }); 
+} 
 
-    listEl.appendChild(card);
-  });
-}
+/* Listeners */
+btnInject.addEventListener('click', ()=>{ currentRoute='Injectable'; btnInject.classList.remove('inactive'); btnOral.classList.add('inactive'); renderList(); }); 
+btnOral.addEventListener('click', ()=>{ currentRoute='Oral'; btnOral.classList.remove('inactive'); btnInject.classList.add('inactive'); renderList(); }); 
+weightEl.addEventListener('input', renderList); 
+searchEl.addEventListener('input', renderList);
 
-// Initial render
-renderList();
-</script>
-</body>
-</html><link rel="manifest" href="manifest.json">
-<script>
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker
-        .register("sw.js")
-        .then(reg => console.log("Service Worker registered:", reg))
-        .catch(err => console.log("Service Worker failed:", err));
-    });
-  }
-
-</script>
+// Initial call
+renderList(); 
+</script> 
+</body> 
+</html>
